@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Dados | Sidney N Silva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #f0f0f0; overflow-x: hidden; }
+        #starsCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%); }
+        .content { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border: 1px solid #00d4ff; border-radius: 40px; padding: 10px 24px; color: #00d4ff; text-decoration: none; font-family: monospace; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { background: #00d4ff; color: #000; transform: scale(1.05); box-shadow: 0 0 20px #00d4ff; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 4rem; background: linear-gradient(135deg, #00d4ff, #0066ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+        .card { background: rgba(10,10,25,0.7); backdrop-filter: blur(10px); border-radius: 28px; padding: 1.8rem; border: 1px solid rgba(0,212,255,0.3); transition: 0.3s; }
+        .card:hover { border-color: #00d4ff; transform: translateY(-8px); box-shadow: 0 0 30px rgba(0,212,255,0.2); }
+        .card h3 { color: #00d4ff; font-size: 1.5rem; margin-bottom: 1rem; }
+        .code-block { background: #000000cc; border-radius: 16px; padding: 1rem; font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; border-left: 3px solid #00d4ff; margin: 1rem 0; overflow-x: auto; }
+        button { background: #00d4ff; color: #000; border: none; padding: 10px 24px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 1rem; }
+        button:hover { transform: scale(1.02); box-shadow: 0 0 15px #00d4ff; }
+        .result-area { background: #000000aa; border-radius: 16px; padding: 1rem; font-family: monospace; min-height: 150px; margin-top: 1rem; overflow-x: auto; }
+        textarea { background: #1a1a2a; border: 1px solid #00d4ff; color: #00ffaa; padding: 12px; border-radius: 12px; width: 100%; font-family: monospace; margin: 0.5rem 0; }
+        .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card { animation: fadeIn 0.5s ease; }
+    </style>
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    <a href="index.html" class="back-btn">← Voltar</a>
+    
+    <div class="content">
+        <div class="header">
+            <h1>🗄️ Banco de Dados</h1>
+            <p>PostgreSQL · MySQL · MongoDB · Redis · Otimização de Queries</p>
+        </div>
+        
+        <div class="demo-grid">
+            <div class="card">
+                <h3>📝 SQL Interativo</h3>
+                <div class="code-block">
+                    -- Tabela: clientes (id, nome, cidade, pedidos)<br>
+                    SELECT * FROM clientes WHERE cidade = 'Rio de Janeiro';
+                </div>
+                <textarea id="sqlQuery" rows="3" placeholder="Digite sua query SQL...&#10;Exemplos:&#10;SELECT * FROM clientes;&#10;SELECT * FROM clientes WHERE cidade = 'São Paulo';&#10;SELECT nome, pedidos FROM clientes ORDER BY pedidos DESC;"></textarea>
+                <button id="runSqlBtn">▶ Executar SQL</button>
+                <div id="sqlResult" class="result-area">Execute uma query SQL para ver os resultados</div>
+            </div>
+            
+            <div class="card">
+                <h3>📊 Modelagem Relacional (DER)</h3>
+                <div class="code-block">
+                    -- Diagrama Entidade-Relacionamento<br>
+                    CLIENTES (id PK, nome, email)<br>
+                    PEDIDOS (id PK, cliente_id FK, valor, data)<br>
+                    PRODUTOS (id PK, nome, preco)
+                </div>
+                <button id="showJoinsBtn">🔗 JOIN Simulado</button>
+                <div id="joinResult" class="result-area">Clique para ver JOIN entre tabelas</div>
+            </div>
+            
+            <div class="card">
+                <h3>⚡ Índices e Performance</h3>
+                <div class="code-block">
+                    -- Criando índice para busca rápida<br>
+                    CREATE INDEX idx_clientes_email ON clientes(email);<br>
+                    EXPLAIN ANALYZE SELECT * FROM clientes WHERE email = 'x';
+                </div>
+                <button id="performanceBtn">📈 Simular Índices</button>
+                <div id="performanceResult" class="result-area">Clique para ver diferença de performance</div>
+            </div>
+            
+            <div class="card">
+                <h3>🍃 MongoDB (NoSQL)</h3>
+                <div class="code-block">
+                    // Documento MongoDB<br>
+                    db.usuarios.insertOne({<br>
+                    &nbsp;&nbsp;nome: "João",<br>
+                    &nbsp;&nbsp;habilidades: ["Java", "Python"],<br>
+                    &nbsp;&nbsp;endereco: { cidade: "SP", bairro: "Centro" }<br>
+                    });
+                </div>
+                <button id="nosqlBtn">📄 Buscar Documentos</button>
+                <div id="nosqlResult" class="result-area">Clique para visualizar dados NoSQL</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✦ SQL · NoSQL · Modelagem · Otimização · Transações ACID ✦</p>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    
+    <script>
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [], width, height;
+        function initStars(){ stars = []; for(let i=0;i<800;i++) stars.push({ x:Math.random()*width, y:Math.random()*height, radius:Math.random()*1.8, alpha:Math.random()*0.7+0.3, speedX:(Math.random()-0.5)*0.2, speedY:(Math.random()-0.5)*0.1 }); }
+        function resizeCanvas(){ width=window.innerWidth; height=window.innerHeight; canvas.width=width; canvas.height=height; initStars(); }
+        function drawStars(){ ctx.clearRect(0,0,width,height); let grad=ctx.createRadialGradient(width/2,height/2,0,width/2,height/2,width/1.5); grad.addColorStop(0,'#030318'); grad.addColorStop(1,'#000'); ctx.fillStyle=grad; ctx.fillRect(0,0,width,height); for(let s of stars){ ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,240,200,${s.alpha})`; ctx.fill(); s.x+=s.speedX; s.y+=s.speedY; if(s.x<0) s.x=width; if(s.x>width) s.x=0; if(s.y<0) s.y=height; if(s.y>height) s.y=0; } requestAnimationFrame(drawStars); }
+        window.addEventListener('resize',resizeCanvas); resizeCanvas(); drawStars();
+        
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.12;
+        audio.play().catch(()=>{});
+        
+        // Base de dados simulada
+        const clientes = [
+            { id:1, nome:"Carlos Silva", cidade:"São Paulo", pedidos:15, email:"carlos@email.com" },
+            { id:2, nome:"Ana Oliveira", cidade:"Rio de Janeiro", pedidos:8, email:"ana@email.com" },
+            { id:3, nome:"Ricardo Souza", cidade:"São Paulo", pedidos:22, email:"ricardo@email.com" },
+            { id:4, nome:"Fernanda Lima", cidade:"Belo Horizonte", pedidos:5, email:"fernanda@email.com" }
+        ];
+        
+        const pedidos = [
+            { id:101, cliente_id:1, valor:1250, data:"2024-01-15" },
+            { id:102, cliente_id:1, valor:850, data:"2024-02-20" },
+            { id:103, cliente_id:3, valor:3200, data:"2024-01-10" },
+            { id:104, cliente_id:2, valor:450, data:"2024-03-01" }
+        ];
+        
+        function executarSQL(query){
+            const q = query.toLowerCase().trim();
+            if(q === 'select * from clientes') return clientes;
+            if(q.includes('select * from clientes where cidade') && q.includes('são paulo')) return clientes.filter(c => c.cidade === "São Paulo");
+            if(q.includes('select nome, pedidos from clientes order by pedidos desc')) return clientes.map(c => ({ nome: c.nome, pedidos: c.pedidos })).sort((a,b) => b.pedidos - a.pedidos);
+            if(q.includes('select') && q.includes('clientes')) return clientes;
+            return { erro: "Query não reconhecida. Use: SELECT * FROM clientes / WHERE cidade = 'São Paulo' / ORDER BY pedidos DESC" };
+        }
+        
+        document.getElementById('runSqlBtn').addEventListener('click', () => {
+            const sql = document.getElementById('sqlQuery').value;
+            const result = executarSQL(sql);
+            document.getElementById('sqlResult').innerHTML = `<strong>📋 Resultado:</strong><br><pre>${JSON.stringify(result, null, 2)}</pre>`;
+        });
+        
+        document.getElementById('showJoinsBtn').addEventListener('click', () => {
+            const joinResult = clientes.map(c => {
+                const pedidosCliente = pedidos.filter(p => p.cliente_id === c.id);
+                return { cliente: c.nome, total_pedidos: pedidosCliente.length, valor_total: pedidosCliente.reduce((s,p) => s + p.valor, 0) };
+            });
+            document.getElementById('joinResult').innerHTML = `
+                <strong>🔗 INNER JOIN: clientes + pedidos</strong><br>
+                <pre>${JSON.stringify(joinResult, null, 2)}</pre>
+                <span style="color:#00d4ff">✅ Modelagem Relacional: Chave Primária (PK) e Chave Estrangeira (FK)</span>
+            `;
+        });
+        
+        document.getElementById('performanceBtn').addEventListener('click', () => {
+            document.getElementById('performanceResult').innerHTML = `
+                <strong>📈 Índices e Performance</strong><br>
+                🔍 Busca sem índice: O(n) - 4ms (simulado)<br>
+                ⚡ Com índice B-Tree: O(log n) - 0.1ms<br>
+                ✅ CREATE INDEX idx_clientes_email ON clientes(email);<br>
+                📌 Índices aceleram SELECT, mas desaceleram INSERT/UPDATE/DELETE
+            `;
+        });
+        
+        document.getElementById('nosqlBtn').addEventListener('click', () => {
+            const documentos = [
+                { _id: 1, nome: "João Silva", habilidades: ["Java", "Spring", "MongoDB"], endereco: { cidade: "SP", bairro: "Centro" } },
+                { _id: 2, nome: "Maria Santos", habilidades: ["Python", "Django", "PostgreSQL"], endereco: { cidade: "RJ", bairro: "Copacabana" } }
+            ];
+            document.getElementById('nosqlResult').innerHTML = `
+                <strong>🍃 MongoDB - Documentos JSON</strong><br>
+                <pre>${JSON.stringify(documentos, null, 2)}</pre>
+                <span style="color:#00d4ff">✅ Flexibilidade: esquemas dinâmicos, embedded documents, alta escalabilidade</span>
+            `;
+        });
+        
+        document.getElementById('sqlQuery').value = "SELECT * FROM clientes";
+    </script>
+</body>
+</html>

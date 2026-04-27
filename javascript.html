@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript | Portfólio Sidney N Silva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #f0f0f0; overflow-x: hidden; min-height: 100vh; }
+        #starsCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%); }
+        .content { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); border: 1px solid #0ff; border-radius: 40px; padding: 10px 20px; color: #0ff; text-decoration: none; font-family: monospace; transition: 0.3s; }
+        .back-btn:hover { background: #0ff; color: #000; transform: scale(1.05); }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 3.5rem; background: linear-gradient(135deg, #f7df1e, #0ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .header p { color: #ccc; margin-top: 0.5rem; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .card { background: rgba(10,10,25,0.7); backdrop-filter: blur(10px); border-radius: 28px; padding: 1.8rem; border: 1px solid rgba(247,223,30,0.3); transition: 0.3s; }
+        .card:hover { border-color: #f7df1e; transform: translateY(-5px); box-shadow: 0 0 30px rgba(247,223,30,0.2); }
+        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #f7df1e; }
+        .code-block { background: #000; border-radius: 16px; padding: 1rem; font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; margin: 1rem 0; overflow-x: auto; border-left: 3px solid #f7df1e; }
+        button { background: #f7df1e; color: #000; border: none; padding: 10px 24px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 1rem; }
+        button:hover { transform: scale(1.02); box-shadow: 0 0 15px #f7df1e; }
+        .result-area { background: #000000aa; border-radius: 16px; padding: 1rem; margin-top: 1rem; font-family: monospace; min-height: 100px; }
+        input, textarea { background: #1a1a2a; border: 1px solid #f7df1e; color: #fff; padding: 10px; border-radius: 12px; width: 100%; margin: 0.5rem 0; }
+        .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card { animation: fadeIn 0.5s ease; }
+    </style>
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    <a href="index.html" class="back-btn">← Voltar ao Portfólio</a>
+    
+    <div class="content">
+        <div class="header">
+            <h1>🟨 JavaScript</h1>
+            <p>Sidney N Silva· Node.js · React · TypeScript · 5+ anos de experiência</p>
+        </div>
+        
+        <div class="demo-grid">
+            <!-- Demo 1: API Simulada -->
+            <div class="card">
+                <h3>📡 API Simulada (Async/Await)</h3>
+                <div class="code-block">
+                    // Simulação de requisição a uma API<br>
+                    async function fetchUsers() {<br>
+                    &nbsp;&nbsp;return new Promise(resolve => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;setTimeout(() => resolve([{id:1,nome:"João"},{id:2,nome:"Maria"}]), 1000);<br>
+                    &nbsp;&nbsp;});<br>
+                    }
+                </div>
+                <button id="fetchApiBtn">🔍 Buscar Usuários da API</button>
+                <div id="apiResult" class="result-area">Clique no botão para simular uma requisição assíncrona</div>
+            </div>
+            
+            <!-- Demo 2: Manipulação de Arrays -->
+            <div class="card">
+                <h3>📊 Manipulação de Dados</h3>
+                <div class="code-block">
+                    const produtos = [<br>
+                    &nbsp;&nbsp;{nome:"Notebook", preco:3500},<br>
+                    &nbsp;&nbsp;{nome:"Mouse", preco:80},<br>
+                    &nbsp;&nbsp;{nome:"Teclado", preco:250}<br>
+                    ];<br>
+                    // filter, map, reduce
+                </div>
+                <button id="processDataBtn">⚙️ Processar Dados</button>
+                <div id="dataResult" class="result-area">Clique para aplicar filter/map/reduce</div>
+            </div>
+            
+            <!-- Demo 3: To-Do List LocalStorage -->
+            <div class="card">
+                <h3>✅ To-Do App (LocalStorage)</h3>
+                <div class="code-block">
+                    // CRUD completo com persistência local<br>
+                    localStorage.setItem('tasks', JSON.stringify(tasks));
+                </div>
+                <input type="text" id="taskInput" placeholder="Nova tarefa...">
+                <button id="addTaskBtn">➕ Adicionar Tarefa</button>
+                <div id="todoList" class="result-area"></div>
+            </div>
+            
+            <!-- Demo 4: Promises e Event Loop -->
+            <div class="card">
+                <h3>⏱️ Event Loop & Promises</h3>
+                <div class="code-block">
+                    console.log('1');<br>
+                    setTimeout(() => console.log('2'), 0);<br>
+                    Promise.resolve().then(() => console.log('3'));<br>
+                    console.log('4'); // Saída: 1,4,3,2
+                </div>
+                <button id="eventLoopBtn">🔄 Executar Event Loop</button>
+                <div id="eventResult" class="result-area">Clique para ver a ordem de execução</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✦ JavaScript: Assincronismo, manipulação de DOM, APIs REST, Node.js, TypeScript ✦</p>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    
+    <script>
+        // ESTRELAS 3D
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [], width, height;
+        function initStars(){ stars = []; for(let i=0;i<800;i++) stars.push({ x:Math.random()*width, y:Math.random()*height, radius:Math.random()*1.8, alpha:Math.random()*0.7+0.3, speedX:(Math.random()-0.5)*0.2, speedY:(Math.random()-0.5)*0.1 }); }
+        function resizeCanvas(){ width=window.innerWidth; height=window.innerHeight; canvas.width=width; canvas.height=height; initStars(); }
+        function drawStars(){ ctx.clearRect(0,0,width,height); let grad=ctx.createRadialGradient(width/2,height/2,0,width/2,height/2,width/1.5); grad.addColorStop(0,'#030318'); grad.addColorStop(1,'#000'); ctx.fillStyle=grad; ctx.fillRect(0,0,width,height); for(let s of stars){ ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,240,200,${s.alpha})`; ctx.fill(); s.x+=s.speedX; s.y+=s.speedY; if(s.x<0) s.x=width; if(s.x>width) s.x=0; if(s.y<0) s.y=height; if(s.y>height) s.y=0; } requestAnimationFrame(drawStars); }
+        window.addEventListener('resize',resizeCanvas); resizeCanvas(); drawStars();
+        
+        // MÚSICA
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.12;
+        audio.play().catch(()=>{});
+        
+        // DEMO 1: API Simulada
+        document.getElementById('fetchApiBtn').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = "⏳ Carregando usuários...";
+            await new Promise(r => setTimeout(r, 800));
+            const users = [
+                { id: 1, nome: "Carlos Silva", email: "carlos@email.com", cargo: "Back-end" },
+                { id: 2, nome: "Ana Oliveira", email: "ana@email.com", cargo: "Front-end" },
+                { id: 3, nome: "Ricardo Souza", email: "ricardo@email.com", cargo: "Full Stack" }
+            ];
+            resultDiv.innerHTML = `<strong>📋 Usuários (API simulada):</strong><br><pre>${JSON.stringify(users, null, 2)}</pre>`;
+        });
+        
+        // DEMO 2: Processamento de dados
+        document.getElementById('processDataBtn').addEventListener('click', () => {
+            const produtos = [
+                { nome: "Notebook Dell", preco: 4500, categoria: "eletrônicos" },
+                { nome: "Mouse Gamer", preco: 120, categoria: "periféricos" },
+                { nome: "Teclado Mecânico", preco: 350, categoria: "periféricos" },
+                { nome: "Monitor 4K", preco: 2200, categoria: "eletrônicos" },
+                { nome: "SSD 1TB", preco: 480, categoria: "armazenamento" }
+            ];
+            const caros = produtos.filter(p => p.preco > 400);
+            const nomes = produtos.map(p => p.nome);
+            const total = produtos.reduce((acc, p) => acc + p.preco, 0);
+            document.getElementById('dataResult').innerHTML = `
+                <strong>📊 Resultados:</strong><br>
+                ✅ Produtos caros (&gt;R$400): ${caros.length}<br>
+                📝 Nomes: ${nomes.join(', ')}<br>
+                💰 Valor total do estoque: R$ ${total.toLocaleString()}<br>
+                <pre>${JSON.stringify(caros, null, 2)}</pre>
+            `;
+        });
+        
+        // DEMO 3: To-Do List
+        let tasks = JSON.parse(localStorage.getItem('jsTasks')) || [];
+        function renderTasks(){
+            const container = document.getElementById('todoList');
+            if(tasks.length === 0){ container.innerHTML = '<em>✨ Nenhuma tarefa. Adicione uma!</em>'; return; }
+            container.innerHTML = tasks.map((t, idx) => `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #f7df1e33; margin-bottom:5px">
+                    <span>📌 ${t.text}</span>
+                    <button class="del-task" data-idx="${idx}" style="background:#ff4757; padding:5px 12px; margin:0">🗑️ Remover</button>
+                </div>
+            `).join('');
+            document.querySelectorAll('.del-task').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = parseInt(btn.getAttribute('data-idx'));
+                    tasks.splice(idx, 1);
+                    localStorage.setItem('jsTasks', JSON.stringify(tasks));
+                    renderTasks();
+                });
+            });
+        }
+        document.getElementById('addTaskBtn').addEventListener('click', () => {
+            const input = document.getElementById('taskInput');
+            if(input.value.trim()){
+                tasks.push({ id: Date.now(), text: input.value });
+                localStorage.setItem('jsTasks', JSON.stringify(tasks));
+                renderTasks();
+                input.value = '';
+            }
+        });
+        renderTasks();
+        
+        // DEMO 4: Event Loop
+        document.getElementById('eventLoopBtn').addEventListener('click', () => {
+            let output = [];
+            output.push("📜 Início da execução");
+            setTimeout(() => output.push("⏰ setTimeout (Macrotask)"), 0);
+            Promise.resolve().then(() => output.push("⚡ Promise (Microtask)"));
+            output.push("📜 Fim da execução síncrona");
+            setTimeout(() => {
+                document.getElementById('eventResult').innerHTML = `
+                    <strong>🔄 Ordem de execução no JavaScript:</strong><br>
+                    ${output.join('<br>')}<br><br>
+                    <span style="color:#f7df1e">✅ Resultado real: 1º código síncrono, 2º Microtasks (Promises), 3º Macrotasks (setTimeout)</span>
+                `;
+            }, 50);
+        });
+    </script>
+</body>
+</html>

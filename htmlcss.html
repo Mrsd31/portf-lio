@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML & CSS | Vitor Nunes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #f0f0f0; overflow-x: hidden; }
+        #starsCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%); }
+        .content { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border: 1px solid #e34c26; border-radius: 40px; padding: 10px 24px; color: #e34c26; text-decoration: none; font-family: monospace; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { background: #e34c26; color: #000; transform: scale(1.05); box-shadow: 0 0 20px #e34c26; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 4rem; background: linear-gradient(135deg, #e34c26, #264de4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .demo-card { background: rgba(10,10,25,0.7); backdrop-filter: blur(10px); border-radius: 28px; padding: 1.8rem; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+        .demo-card:hover { transform: translateY(-8px); border-color: #e34c26; box-shadow: 0 0 30px rgba(227,76,38,0.2); }
+        .demo-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .preview { background: #0a0a14; border-radius: 20px; padding: 1.5rem; margin: 1rem 0; border: 1px dashed #e34c26; }
+        
+        .flex-demo { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .flex-item { background: linear-gradient(135deg, #e34c26, #f39c12); padding: 1rem; border-radius: 16px; text-align: center; flex: 1; min-width: 100px; }
+        
+        .grid-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+        .grid-item { background: linear-gradient(135deg, #264de4, #3498db); padding: 1rem; border-radius: 16px; text-align: center; }
+        
+        .glass-card { backdrop-filter: blur(12px); background: rgba(255,255,255,0.1); border-radius: 24px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.2); }
+        
+        .animated-btn { background: #e34c26; border: none; padding: 12px 28px; border-radius: 40px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        .animated-btn:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 10px 25px rgba(227,76,38,0.4); }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-element { animation: float 3s ease-in-out infinite; display: inline-block; }
+        
+        .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        .code-block { background: #000000cc; border-radius: 16px; padding: 1rem; font-family: monospace; font-size: 0.8rem; margin: 1rem 0; border-left: 3px solid #e34c26; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    <a href="index.html" class="back-btn">← Voltar</a>
+    
+    <div class="content">
+        <div class="header">
+            <h1>🌐 HTML5 & CSS3</h1>
+            <p>Responsivo · Flexbox · Grid · Animações · Glassmorphism</p>
+        </div>
+        
+        <div class="gallery">
+            <div class="demo-card">
+                <h3>📱 Flexbox</h3>
+                <div class="preview">
+                    <div class="flex-demo">
+                        <div class="flex-item">Item 1</div>
+                        <div class="flex-item">Item 2</div>
+                        <div class="flex-item">Item 3</div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    .flex-demo { display: flex; gap: 1rem; flex-wrap: wrap; }<br>
+                    .flex-item { flex: 1; min-width: 100px; }
+                </div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>🔲 CSS Grid</h3>
+                <div class="preview">
+                    <div class="grid-demo">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    .grid-demo { display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: repeat(auto-fit, minmax(120px,1fr));<br>
+                    &nbsp;&nbsp;gap: 1rem; }
+                </div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>🥃 Glassmorphism</h3>
+                <div class="preview">
+                    <div class="glass-card">
+                        <p>Efeito vidro com backdrop-filter</p>
+                        <span class="float-element">✨ Flutuando ✨</span>
+                    </div>
+                </div>
+                <div class="code-block">
+                    .glass-card { backdrop-filter: blur(12px);<br>
+                    &nbsp;&nbsp;background: rgba(255,255,255,0.1);<br>
+                    &nbsp;&nbsp;border: 1px solid rgba(255,255,255,0.2); }
+                </div>
+            </div>
+            
+            <div class="demo-card">
+                <h3>🎬 Animações & Transições</h3>
+                <div class="preview" style="text-align: center;">
+                    <button class="animated-btn" id="animateBtn">✨ Passe o Mouse ✨</button>
+                    <div style="margin-top: 1rem;">
+                        <div class="float-element" style="font-size: 2rem;">🚀</div>
+                    </div>
+                </div>
+                <div class="code-block">
+                    @keyframes float { 0% { transform: translateY(0); }<br>
+                    &nbsp;&nbsp;50% { transform: translateY(-10px); }<br>
+                    &nbsp;&nbsp;100% { transform: translateY(0); } }<br>
+                    .animated-btn:hover { transform: scale(1.05); }
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✦ HTML5 Semântico · CSS3 Avançado · Responsividade · Design Systems ✦</p>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    
+    <script>
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [], width, height;
+        function initStars(){ stars = []; for(let i=0;i<800;i++) stars.push({ x:Math.random()*width, y:Math.random()*height, radius:Math.random()*1.8, alpha:Math.random()*0.7+0.3, speedX:(Math.random()-0.5)*0.2, speedY:(Math.random()-0.5)*0.1 }); }
+        function resizeCanvas(){ width=window.innerWidth; height=window.innerHeight; canvas.width=width; canvas.height=height; initStars(); }
+        function drawStars(){ ctx.clearRect(0,0,width,height); let grad=ctx.createRadialGradient(width/2,height/2,0,width/2,height/2,width/1.5); grad.addColorStop(0,'#030318'); grad.addColorStop(1,'#000'); ctx.fillStyle=grad; ctx.fillRect(0,0,width,height); for(let s of stars){ ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,240,200,${s.alpha})`; ctx.fill(); s.x+=s.speedX; s.y+=s.speedY; if(s.x<0) s.x=width; if(s.x>width) s.x=0; if(s.y<0) s.y=height; if(s.y>height) s.y=0; } requestAnimationFrame(drawStars); }
+        window.addEventListener('resize',resizeCanvas); resizeCanvas(); drawStars();
+        
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.12;
+        audio.play().catch(()=>{});
+    </script>
+</body>
+</html>

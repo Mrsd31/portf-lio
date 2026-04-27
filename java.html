@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java | Vitor Nunes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #f0f0f0; overflow-x: hidden; }
+        #starsCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; background: radial-gradient(circle at center, #0a0a2a 0%, #000 100%); }
+        .content { position: relative; z-index: 10; max-width: 1400px; margin: 0 auto; padding: 2rem; }
+        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border: 1px solid #ea2d2d; border-radius: 40px; padding: 10px 24px; color: #ea2d2d; text-decoration: none; font-family: monospace; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { background: #ea2d2d; color: #000; transform: scale(1.05); box-shadow: 0 0 20px #ea2d2d; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-size: 4rem; background: linear-gradient(135deg, #ea2d2d, #ff6b6b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 2rem; }
+        .card { background: rgba(10,10,25,0.7); backdrop-filter: blur(10px); border-radius: 28px; padding: 1.8rem; border: 1px solid rgba(234,45,45,0.3); transition: 0.3s; }
+        .card:hover { border-color: #ea2d2d; transform: translateY(-8px); box-shadow: 0 0 30px rgba(234,45,45,0.2); }
+        .card h3 { color: #ea2d2d; font-size: 1.5rem; margin-bottom: 1rem; }
+        .code-block { background: #000000cc; border-radius: 16px; padding: 1rem; font-family: 'Share Tech Mono', monospace; font-size: 0.8rem; border-left: 3px solid #ea2d2d; margin: 1rem 0; overflow-x: auto; }
+        button { background: #ea2d2d; color: #fff; border: none; padding: 10px 24px; border-radius: 40px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 1rem; }
+        button:hover { transform: scale(1.02); box-shadow: 0 0 15px #ea2d2d; }
+        .result-area { background: #000000aa; border-radius: 16px; padding: 1rem; font-family: monospace; min-height: 120px; margin-top: 1rem; }
+        input { background: #1a1a2a; border: 1px solid #ea2d2d; color: #fff; padding: 10px; border-radius: 12px; width: 100%; margin: 0.5rem 0; }
+        .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card { animation: fadeIn 0.5s ease; }
+    </style>
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    <a href="index.html" class="back-btn">← Voltar</a>
+    
+    <div class="content">
+        <div class="header">
+            <h1>☕ Java & Spring Boot</h1>
+            <p>Spring Framework · Microservices · JPA/Hibernate · 2+ anos de experiência</p>
+        </div>
+        
+        <div class="demo-grid">
+            <div class="card">
+                <h3>📦 API REST Simulada</h3>
+                <div class="code-block">
+                    @RestController<br>
+                    @RequestMapping("/api/users")<br>
+                    public class UserController {<br>
+                    &nbsp;&nbsp;@GetMapping<br>
+                    &nbsp;&nbsp;public List<User> getUsers() { ... }<br>
+                    }
+                </div>
+                <button id="listUsersBtn">📋 Listar Usuários (GET)</button>
+                <div id="usersList" class="result-area">Clique para simular endpoint GET</div>
+            </div>
+            
+            <div class="card">
+                <h3>➕ Spring Data JPA</h3>
+                <div class="code-block">
+                    @Entity<br>
+                    public class Produto {<br>
+                    &nbsp;&nbsp;@Id @GeneratedValue<br>
+                    &nbsp;&nbsp;private Long id;<br>
+                    &nbsp;&nbsp;private String nome;<br>
+                    &nbsp;&nbsp;private BigDecimal preco;<br>
+                    }
+                </div>
+                <input type="text" id="produtoNome" placeholder="Nome do produto">
+                <input type="number" id="produtoPreco" placeholder="Preço">
+                <button id="addProdutoBtn">➕ Cadastrar (POST)</button>
+                <div id="produtosList" class="result-area">Lista de produtos</div>
+            </div>
+            
+            <div class="card">
+                <h3>⚡ Programação Funcional (Streams)</h3>
+                <div class="code-block">
+                    List&lt;String&gt; nomes = users.stream()<br>
+                    &nbsp;&nbsp;.filter(u -> u.getIdade() > 18)<br>
+                    &nbsp;&nbsp;.map(User::getNome)<br>
+                    &nbsp;&nbsp;.collect(Collectors.toList());
+                </div>
+                <button id="streamDemoBtn">🔄 Executar Stream</button>
+                <div id="streamResult" class="result-area">Clique para ver Stream API em ação</div>
+            </div>
+            
+            <div class="card">
+                <h3>🔧 Padrões de Projeto (Singleton)</h3>
+                <div class="code-block">
+                    public class DatabaseConnection {<br>
+                    &nbsp;&nbsp;private static DatabaseConnection instance;<br>
+                    &nbsp;&nbsp;public static synchronized getInstance() { ... }<br>
+                    }
+                </div>
+                <button id="singletonBtn">🔌 Obter Conexão</button>
+                <div id="singletonResult" class="result-area">Clique para verificar Singleton</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✦ Java: Spring Boot · JPA · Microservices · Stream API · Design Patterns ✦</p>
+        </div>
+    </div>
+    
+    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+    
+    <script>
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [], width, height;
+        function initStars(){ stars = []; for(let i=0;i<800;i++) stars.push({ x:Math.random()*width, y:Math.random()*height, radius:Math.random()*1.8, alpha:Math.random()*0.7+0.3, speedX:(Math.random()-0.5)*0.2, speedY:(Math.random()-0.5)*0.1 }); }
+        function resizeCanvas(){ width=window.innerWidth; height=window.innerHeight; canvas.width=width; canvas.height=height; initStars(); }
+        function drawStars(){ ctx.clearRect(0,0,width,height); let grad=ctx.createRadialGradient(width/2,height/2,0,width/2,height/2,width/1.5); grad.addColorStop(0,'#030318'); grad.addColorStop(1,'#000'); ctx.fillStyle=grad; ctx.fillRect(0,0,width,height); for(let s of stars){ ctx.beginPath(); ctx.arc(s.x,s.y,s.radius,0,Math.PI*2); ctx.fillStyle=`rgba(255,240,200,${s.alpha})`; ctx.fill(); s.x+=s.speedX; s.y+=s.speedY; if(s.x<0) s.x=width; if(s.x>width) s.x=0; if(s.y<0) s.y=height; if(s.y>height) s.y=0; } requestAnimationFrame(drawStars); }
+        window.addEventListener('resize',resizeCanvas); resizeCanvas(); drawStars();
+        
+        const audio = document.getElementById('bgMusic');
+        audio.volume = 0.12;
+        audio.play().catch(()=>{});
+        
+        let users = [{ id:1, nome:"Carlos", email:"carlos@email.com" }, { id:2, nome:"Ana", email:"ana@email.com" }, { id:3, nome:"Ricardo", email:"ricardo@email.com" }];
+        let produtos = [{ id:1, nome:"Notebook", preco:3500 }, { id:2, nome:"Mouse", preco:80 }];
+        
+        document.getElementById('listUsersBtn').addEventListener('click', () => {
+            document.getElementById('usersList').innerHTML = `<strong>GET /api/users</strong><br><pre>${JSON.stringify(users, null, 2)}</pre>`;
+        });
+        
+        function renderProdutos(){
+            document.getElementById('produtosList').innerHTML = `<strong>📦 Produtos cadastrados:</strong><br><pre>${JSON.stringify(produtos, null, 2)}</pre>`;
+        }
+        document.getElementById('addProdutoBtn').addEventListener('click', () => {
+            const nome = document.getElementById('produtoNome').value;
+            const preco = parseFloat(document.getElementById('produtoPreco').value);
+            if(nome && preco){
+                produtos.push({ id: produtos.length+1, nome, preco });
+                renderProdutos();
+                document.getElementById('produtoNome').value = '';
+                document.getElementById('produtoPreco').value = '';
+            }
+        });
+        renderProdutos();
+        
+        document.getElementById('streamDemoBtn').addEventListener('click', () => {
+            const produtosCaros = produtos.filter(p => p.preco > 100);
+            const nomes = produtos.map(p => p.nome);
+            document.getElementById('streamResult').innerHTML = `
+                <strong>📊 Stream API (Java 8+):</strong><br>
+                ✅ Produtos > R$100: ${produtosCaros.length}<br>
+                📝 Nomes: ${nomes.join(', ')}<br>
+                <pre>${JSON.stringify(produtosCaros, null, 2)}</pre>
+            `;
+        });
+        
+        let singletonCounter = 0;
+        document.getElementById('singletonBtn').addEventListener('click', () => {
+            singletonCounter++;
+            document.getElementById('singletonResult').innerHTML = `
+                <strong>🔌 Padrão Singleton - DatabaseConnection</strong><br>
+                ✅ Conexão obtida ${singletonCounter} vez(es)<br>
+                📌 A mesma instância é reutilizada (economia de recursos)<br>
+                <span style="color:#ea2d2d">💡 Garante apenas uma conexão ativa por aplicação</span>
+            `;
+        });
+    </script>
+</body>
+</html>
